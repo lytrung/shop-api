@@ -31,6 +31,25 @@ router.get('/testing', (req, res) => {
   res.send('<h1>Testing is working</h1>')
 })
 
+router.get('/products', (req, res) => {
+
+	Product.find()
+	.then((items) => {
+	    return res.json(items);
+	});
+
+})
+
+router.get('/products/:id', (req, res) => {
+
+	Product.findOne({id:req.params.id})
+	.populate('type')
+	.populate('reviews')
+	.then((item) => {
+	    return res.json(item);
+	});
+})
+
 app.use('/api', router);
 // launch our backend into a port
 const apiPort = 3001;
